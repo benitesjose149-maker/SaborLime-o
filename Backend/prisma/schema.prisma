@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+model User {
+  id            Int       @id @default(autoincrement()) @map("id")
+  name          String?   @map("name")
+  apellido      String?   @map("apellido")
+  email         String?   @unique @map("email")
+  password      String?   @map("password")
+  provider      String?   @default("local") @map("provider")
+  phone         String?   @map("phone")
+  address       String?   @map("address")
+  image         String?   @map("image")
+  emailVerified DateTime? @map("emailVerified")
+  createdAt     DateTime  @default(now()) @map("createdAt")
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]
+
+  @@map("Users")
+}
+
+model Account {
+  id                Int     @id @default(autoincrement()) @map("id")
+  userId            Int     @map("userId")
+  type              String  @map("type")
+  provider          String  @map("provider")
+  providerAccountId String  @map("providerAccountId")
+  refresh_token     String? @db.Text @map("refresh_token")
+  access_token      String? @db.Text @map("access_token")
+  expires_at        Int?    @map("expires_at")
+  token_type        String? @map("token_type")
+  scope             String? @map("scope")
+  id_token          String? @db.Text @map("id_token")
+  session_state     String? @map("session_state")
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId], map: "Account_provider_providerAccountId_key")
+  @@map("Account")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement()) @map("id")
+  sessionToken String   @unique(map: "Session_sessionToken_key") @map("sessionToken")
+  userId       Int      @map("userId")
+  expires      DateTime @map("expires")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("Session")
+}
+
+model Order {
+  id            Int         @id @default(autoincrement()) @map("ID")
+  userId        Int         @map("USER_ID")
+  total         Decimal     @db.Decimal(10, 2) @map("TOTAL")
+  status        String?     @default("PENDIENTE") @db.VarChar(20) @map("STATUS")
+  paymentMethod String      @default("YAPE") @db.VarChar(50) @map("PAYMENT_METHOD")
+  paymentPhone  String?     @db.VarChar(20) @map("PAYMENT_PHONE")
+  approvalCode  String?     @db.VarChar(20) @map("APPROVAL_CODE")
+  address       String?     @db.VarChar(255) @map("ADDRESS")
+  phone         String?     @db.VarChar(20) @map("PHONE")
+  createdAt     DateTime?   @default(now()) @db.DateTime @map("CREATED_AT")
+  items         OrderItem[]
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ORDERS_USERS")
+
+  @@map("ORDERS")
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement()) @map("ID")
+  orderId   Int     @map("ORDER_ID")
+  dishId    String  @db.VarChar(50) @map("DISH_ID")
+  dishName  String  @db.VarChar(100) @map("DISH_NAME")
+  price     Decimal @db.Decimal(10, 2) @map("PRICE")
+  quantity  Int     @map("QUANTITY")
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ITEMS_ORDERS")
+
+  @@map("ORDER_ITEMS")
+}
+
+model VerificationToken {
+  identifier String @map("identifier")
+  token      String @unique(map: "VerificationToken_token_key") @map("token")
+  expires    DateTime @map("expires")
+
+  @@unique([identifier, token], map: "VerificationToken_identifier_token_key")
+  @@map("VerificationToken")
+}
