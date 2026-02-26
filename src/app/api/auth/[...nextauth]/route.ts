@@ -57,9 +57,27 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user }) {
+            // Unid inicial cuando se loguea
             if (user) {
                 token.id = user.id;
                 token.role = (user as any).role || "USER";
+            }
+
+            // Sincronizar con la DB en cada refresco del token
+            if (token.email) {
+                try {
+                    const dbUser = await prisma.user.findUnique({
+                        where: { email: token.email },
+                        select: { id: true, role: true }
+                    });
+
+                    if (dbUser) {
+                        token.id = dbUser.id.toString();
+                        token.role = dbUser.role;
+                    }
+                } catch (error) {
+                    console.error("Error syncing user from DB:", error);
+                }
             }
             return token;
         },

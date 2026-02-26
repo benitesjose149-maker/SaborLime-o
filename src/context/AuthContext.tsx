@@ -33,11 +33,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (session?.user) {
             console.log("LOG [AuthContext]: session.user ->", session.user);
+            const role = (session.user as any).role || "USER";
             const googleUser = {
                 id: (session.user as any).id?.toString() || "google-user",
                 name: session.user.name || "",
                 email: session.user.email || "",
-                role: (session.user as any).role || "USER",
+                role: role,
                 image: session.user.image || undefined,
             };
             setUser(googleUser);
@@ -45,7 +46,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             const isAuthPage = window.location.pathname === "/login" || window.location.pathname === "/register";
             if (isAuthPage) {
-                router.push("/");
+                if (role.toUpperCase() === "ADMIN") {
+                    router.push("/admin/carta");
+                } else {
+                    router.push("/");
+                }
             }
         } else {
             setUser(null);

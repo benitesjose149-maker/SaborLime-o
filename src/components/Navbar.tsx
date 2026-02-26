@@ -40,9 +40,14 @@ export default function Navbar() {
     return (
         <header className="bg-brand-red/90 backdrop-blur-md text-white py-6 px-4 fixed top-0 w-full z-50 shadow-md">
             <div className="max-w-6xl mx-auto flex justify-between items-center">
-                <Link href="/" className="font-serif text-2xl font-bold">Sabor Limeño</Link>
+                <Link
+                    href={user?.role?.toUpperCase() === "ADMIN" ? "/admin/carta" : "/"}
+                    className="font-serif text-2xl font-bold"
+                >
+                    Sabor Limeño
+                </Link>
 
-                <nav className="hidden md:flex gap-8 text-sm font-medium uppercase tracking-wider">
+                <nav className="hidden md:flex gap-8 text-sm font-medium uppercase tracking-wider items-center">
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
@@ -52,6 +57,15 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
+                    {user?.role?.toUpperCase() === "ADMIN" && (
+                        <Link
+                            href="/"
+                            className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-[10px] font-bold border border-white/20 transition-all flex items-center gap-2"
+                        >
+                            <User className="w-3 h-3" />
+                            VER WEB
+                        </Link>
+                    )}
                 </nav>
 
                 <div className="flex items-center gap-6">
