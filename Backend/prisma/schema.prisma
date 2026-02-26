@@ -105,3 +105,12 @@ model VerificationToken {
   @@unique([identifier, token], map: "VerificationToken_identifier_token_key")
   @@map("VerificationToken")
 }
+
+model PageContent {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique // e.g., 'nosotros_history_title'
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@map("PageContent")
+}

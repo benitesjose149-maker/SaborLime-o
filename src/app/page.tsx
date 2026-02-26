@@ -27,6 +27,24 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedMessage, setAddedMessage] = useState(false);
 
+  const [heroContent, setHeroContent] = useState({
+    home_hero_title: "Sabor Limeño",
+    home_hero_subtitle: "Comida criolla peruana con el auténtico sabor casero que te hace sentir en familia."
+  });
+
+  useState(() => {
+    fetch("/api/admin/content?prefix=home_hero")
+      .then(res => res.json())
+      .then(data => {
+        if (data.home_hero_title) {
+          setHeroContent({
+            home_hero_title: data.home_hero_title,
+            home_hero_subtitle: data.home_hero_subtitle || ""
+          });
+        }
+      });
+  });
+
   const featuredDishes: Dish[] = [
     {
       id: "lomo-saltado",
@@ -116,11 +134,11 @@ export default function Home() {
           <span className="text-brand-yellow text-lg uppercase tracking-[0.3em] font-bold mb-4 block drop-shadow-md">
             Tradición en cada bocado
           </span>
-          <h1 className="font-serif text-6xl md:text-8xl text-white mb-6 drop-shadow-2xl">
-            Sabor Limeño
+          <h1 className="font-serif text-6xl md:text-8xl text-white mb-6 drop-shadow-2xl text-center">
+            {heroContent.home_hero_title}
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 font-medium mb-12 max-w-2xl mx-auto drop-shadow-lg italic">
-            "Comida criolla peruana con el auténtico sabor casero que te hace sentir en familia."
+          <p className="text-xl md:text-2xl text-white/90 font-medium mb-12 max-w-2xl mx-auto drop-shadow-lg italic text-center">
+            "{heroContent.home_hero_subtitle}"
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
