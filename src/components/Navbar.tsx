@@ -198,13 +198,13 @@ export default function Navbar() {
                     </button>
                 </div>
 
-                <nav className="flex flex-col gap-8">
+                <nav className="flex flex-col gap-6">
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className={`text-2xl font-bold uppercase tracking-widest transition-colors ${pathname === link.href ? 'text-brand-yellow scale-105 origin-left' : 'text-white hover:text-brand-yellow'
+                            className={`text-lg font-bold uppercase tracking-wider transition-colors ${pathname === link.href ? 'text-brand-yellow scale-105 origin-left' : 'text-white hover:text-brand-yellow'
                                 }`}
                         >
                             {link.name}

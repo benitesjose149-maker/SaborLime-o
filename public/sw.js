@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sabor-limeno-cache-v4';
+const CACHE_NAME = 'sabor-limeno-cache-v5';
 const urlsToCache = [
   '/',
   '/manifest.webmanifest',
