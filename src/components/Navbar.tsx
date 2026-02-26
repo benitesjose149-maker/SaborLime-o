@@ -177,30 +177,27 @@ export default function Navbar() {
 
             {/* Mobile Navigation Menu */}
             <div
-                className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                className={`md:hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[100] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setIsMobileMenuOpen(false)}
             >
                 <div
                     ref={mobileMenuRef}
-                    className={`absolute left-0 top-0 bottom-0 w-3/4 max-w-sm bg-brand-red p-8 shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                        }`}
+                    className={`absolute left-0 top-0 bottom-0 w-4/5 max-w-xs bg-[#700000] p-10 shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                        } flex flex-col`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="flex justify-between items-center mb-12">
-                        <span className="font-serif text-2xl font-bold text-white">Sabor Limeño</span>
-                        <button onClick={() => setIsMobileMenuOpen(false)} className="text-white/60 hover:text-white">
-                            <X className="w-6 h-6" />
-                        </button>
+                    <div className="mb-12">
+                        <span className="font-serif text-3xl font-bold text-white block border-b border-white/10 pb-4">Menú</span>
                     </div>
 
-                    <nav className="flex flex-col gap-6">
+                    <nav className="flex flex-col gap-8">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className={`text-lg font-bold uppercase tracking-widest ${pathname === link.href ? 'text-brand-yellow' : 'text-white/80'
+                                className={`text-xl font-bold uppercase tracking-widest transition-colors ${pathname === link.href ? 'text-brand-yellow' : 'text-white hover:text-brand-yellow'
                                     }`}
                             >
                                 {link.name}
@@ -221,11 +218,11 @@ export default function Navbar() {
                         )}
                     </nav>
 
-                    <div className="absolute bottom-8 left-8 right-8">
-                        <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Síguenos</p>
+                    <div className="mt-auto pt-10">
+                        <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Redes Sociales</p>
                         <div className="flex gap-4">
-                            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white">IG</div>
-                            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white">FB</div>
+                            <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors">IG</a>
+                            <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors">FB</a>
                         </div>
                     </div>
                 </div>
