@@ -53,19 +53,21 @@ export default function Navbar() {
 
     return (
         <header className="bg-brand-red/90 backdrop-blur-md text-white py-6 px-4 fixed top-0 w-full z-50 shadow-md">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                    {/* Mobile Menu Toggle */}
+            <div className="max-w-6xl mx-auto flex justify-between items-center relative">
+                {/* Left side: Mobile Toggle + Logo */}
+                <div className="flex items-center gap-2">
+                    {/* Mobile Menu Toggle - ALWAYS AVAILABLE ON MOBILE */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="md:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-colors"
+                        className="md:hidden flex items-center justify-center p-2 text-white hover:bg-white/10 rounded-xl transition-all z-50 shrink-0"
+                        aria-label="Menu"
                     >
-                        {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
                     </button>
 
                     <Link
                         href={(isAdmin && isAdminRoute) ? "/admin/carta" : "/"}
-                        className="font-serif text-2xl font-bold"
+                        className="font-serif text-xl sm:text-2xl font-bold truncate tracking-tight transition-all hover:text-brand-yellow shrink"
                     >
                         Sabor Limeño
                     </Link>
