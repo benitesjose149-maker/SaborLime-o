@@ -53,10 +53,9 @@ export default function Navbar() {
 
     return (
         <header className="bg-brand-red/90 backdrop-blur-md text-white py-6 px-4 fixed top-0 w-full z-50 shadow-md">
-            <div className="max-w-6xl mx-auto flex justify-between items-center relative">
-                {/* Left side: Mobile Toggle + Logo */}
-                <div className="flex items-center gap-2">
-                    {/* Mobile Menu Toggle - ALWAYS AVAILABLE ON MOBILE */}
+            <div className="max-w-6xl mx-auto flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                    {/* Mobile Menu Toggle */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="md:hidden flex items-center justify-center p-2 text-white hover:bg-white/10 rounded-xl transition-all z-50 shrink-0"
@@ -179,14 +178,14 @@ export default function Navbar() {
 
             {/* Mobile Navigation Menu */}
             <div
-                className={`md:hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[100] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                className={`md:hidden fixed inset-0 bg-black z-[100] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-80' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setIsMobileMenuOpen(false)}
             >
                 <div
                     ref={mobileMenuRef}
-                    className={`absolute left-0 top-0 bottom-0 w-4/5 max-w-xs bg-[#700000] p-10 shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                        } flex flex-col`}
+                    className={`absolute left-0 top-0 bottom-0 w-[85%] max-w-[300px] bg-[#800000] p-10 shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                        } flex flex-col z-[110]`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className="mb-12">
