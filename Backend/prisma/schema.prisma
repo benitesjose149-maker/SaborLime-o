@@ -17,12 +17,26 @@ model User {
   address       String?   @map("address")
   image         String?   @map("image")
   emailVerified DateTime? @map("emailVerified")
+  role          String    @default("USER") @map("role")
   createdAt     DateTime  @default(now()) @map("createdAt")
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
 
   @@map("Users")
+}
+
+model Dish {
+  id          Int      @id @default(autoincrement()) @map("id")
+  name        String   @map("name")
+  description String?  @map("description")
+  price       Decimal  @db.Decimal(10, 2) @map("price")
+  category    String   @map("category")
+  image       String?  @map("image")
+  available   Boolean  @default(true) @map("available")
+  createdAt   DateTime @default(now()) @map("createdAt")
+
+  @@map("Dishes")
 }
 
 model Account {

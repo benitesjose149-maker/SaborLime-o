@@ -5,10 +5,11 @@ import { prisma } from "@/lib/prisma";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import "dotenv/config";
 
 export const authOptions: NextAuthOptions = {
     // @ts-ignore - PrismaAdapter mismatch with NextAuth versions sometimes happens in types
-    adapter: PrismaAdapter(prisma),
+    // adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -43,9 +44,10 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 return {
-                    id: user.id,
+                    id: user.id.toString(),
                     name: user.name,
                     email: user.email,
+                    role: user.role, // <-- Añadir rol
                 };
             }
         })
@@ -54,15 +56,17 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
     },
     callbacks: {
-        async jwt({ token, user, account }) {
+        async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
+                token.role = (user as any).role || "USER";
             }
             return token;
         },
         async session({ session, token }) {
             if (session.user) {
                 (session.user as any).id = token.id;
+                (session.user as any).role = token.role || "USER";
             }
             return session;
         },
@@ -75,6 +79,7 @@ export const authOptions: NextAuthOptions = {
     debug: true,
 };
 
+// Log requests to /api/auth
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

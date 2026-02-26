@@ -4,13 +4,17 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
-import { User, ShoppingBag, LogOut, ChevronDown, UserCircle } from "lucide-react";
+import { User, ShoppingBag, LogOut, ChevronDown, UserCircle, Settings } from "lucide-react";
 
 export default function Navbar() {
     const { user, logout } = useAuth();
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (user) console.log("LOG [Navbar]: user state ->", user);
+    }, [user]);
 
     // Close menu when clicking outside
     useEffect(() => {
@@ -78,6 +82,9 @@ export default function Navbar() {
                                 <div className="px-5 py-4 bg-gray-50/50 border-b border-gray-100">
                                     <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Mi Cuenta</p>
                                     <p className="text-sm font-bold text-gray-800 truncate">{user.email}</p>
+                                    <span className="inline-block mt-1 px-2 py-0.5 bg-gray-100 text-[10px] font-bold text-gray-400 rounded uppercase tracking-wider border border-gray-200">
+                                        Rol: {user.role}
+                                    </span>
                                 </div>
 
                                 <div className="p-2">
@@ -96,6 +103,16 @@ export default function Navbar() {
                                         <ShoppingBag className="w-5 h-5 text-gray-400 group-hover:text-brand-red" />
                                         <span className="text-sm font-medium">Mis Pedidos</span>
                                     </Link>
+
+                                    {user.role?.toUpperCase() === "ADMIN" && (
+                                        <Link
+                                            href="/admin/carta"
+                                            className="flex items-center gap-3 px-4 py-3 text-brand-red hover:bg-red-50 rounded-xl transition-colors group"
+                                        >
+                                            <Settings className="w-5 h-5 text-brand-red/60 group-hover:text-brand-red" />
+                                            <span className="text-sm font-bold">Administración</span>
+                                        </Link>
+                                    )}
                                 </div>
 
                                 <div className="p-2 border-t border-gray-100 bg-gray-50/30">

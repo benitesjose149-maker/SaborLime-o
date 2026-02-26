@@ -7,6 +7,7 @@ interface User {
     id: string;
     name: string;
     email: string;
+    role: string;
     image?: string;
 }
 
@@ -31,17 +32,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 
         if (session?.user) {
-            // Usuario autenticado por Google/NextAuth
+            console.log("LOG [AuthContext]: session.user ->", session.user);
             const googleUser = {
                 id: (session.user as any).id?.toString() || "google-user",
                 name: session.user.name || "",
                 email: session.user.email || "",
+                role: (session.user as any).role || "USER",
                 image: session.user.image || undefined,
             };
             setUser(googleUser);
             setIsLoading(false);
 
-            // Solo redirigir si estamos en login/register para no interrumpir otros flujos
             const isAuthPage = window.location.pathname === "/login" || window.location.pathname === "/register";
             if (isAuthPage) {
                 router.push("/");
