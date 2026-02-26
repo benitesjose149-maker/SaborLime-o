@@ -176,55 +176,57 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Navigation Menu */}
+            {/* Mobile Navigation Menu Backdrop */}
             <div
-                className={`md:hidden fixed inset-0 bg-black z-[100] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-80' : 'opacity-0 pointer-events-none'
+                className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                     }`}
                 onClick={() => setIsMobileMenuOpen(false)}
+            />
+
+            {/* Mobile Navigation Sidebar */}
+            <div
+                ref={mobileMenuRef}
+                className={`md:hidden fixed left-0 top-0 bottom-0 w-[85%] max-w-[300px] bg-[#800000] p-10 shadow-2xl transition-transform duration-300 transform z-[110] flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`}
+                onClick={(e) => e.stopPropagation()}
+                style={{ backgroundColor: '#800000', opacity: 1 }}
             >
-                <div
-                    ref={mobileMenuRef}
-                    className={`absolute left-0 top-0 bottom-0 w-[85%] max-w-[300px] bg-[#800000] p-10 shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                        } flex flex-col z-[110]`}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div className="mb-12">
-                        <span className="font-serif text-3xl font-bold text-white block border-b border-white/10 pb-4">Menú</span>
-                    </div>
+                <div className="mb-12">
+                    <span className="font-serif text-3xl font-bold text-white block border-b border-white/10 pb-4">Menú</span>
+                </div>
 
-                    <nav className="flex flex-col gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className={`text-xl font-bold uppercase tracking-widest transition-colors ${pathname === link.href ? 'text-brand-yellow' : 'text-white hover:text-brand-yellow'
-                                    }`}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                <nav className="flex flex-col gap-8">
+                    {navLinks.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={`text-xl font-bold uppercase tracking-widest transition-colors ${pathname === link.href ? 'text-brand-yellow' : 'text-white hover:text-brand-yellow'
+                                }`}
+                        >
+                            {link.name}
+                        </Link>
+                    ))}
 
-                        <div className="h-px bg-white/10 my-4" />
+                    <div className="h-px bg-white/10 my-4" />
 
-                        {isAdmin && (
-                            <Link
-                                href={isAdminRoute ? "/" : "/admin"}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="bg-white/10 text-white px-6 py-4 rounded-2xl font-bold text-sm flex items-center gap-3 border border-white/20 active:bg-white/20"
-                            >
-                                <Settings className="w-5 h-5" />
-                                {isAdminRoute ? "VER WEB" : "ADMINISTRACIÓN"}
-                            </Link>
-                        )}
-                    </nav>
+                    {isAdmin && (
+                        <Link
+                            href={isAdminRoute ? "/" : "/admin"}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="bg-white/10 text-white px-6 py-4 rounded-2xl font-bold text-sm flex items-center gap-3 border border-white/20 active:bg-white/20"
+                        >
+                            <Settings className="w-5 h-5" />
+                            {isAdminRoute ? "VER WEB" : "ADMINISTRACIÓN"}
+                        </Link>
+                    )}
+                </nav>
 
-                    <div className="mt-auto pt-10">
-                        <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Redes Sociales</p>
-                        <div className="flex gap-4">
-                            <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors">IG</a>
-                            <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors">FB</a>
-                        </div>
+                <div className="mt-auto pt-10">
+                    <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Redes Sociales</p>
+                    <div className="flex gap-4">
+                        <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors">IG</a>
+                        <a href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors">FB</a>
                     </div>
                 </div>
             </div>
