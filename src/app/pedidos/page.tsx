@@ -148,16 +148,19 @@ export default function MyOrdersPage() {
                     Volver a la carta
                 </Link>
 
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6">
                     <div>
-                        <h1 className="font-serif text-5xl md:text-6xl text-brand-red mb-3">Mis Pedidos</h1>
-                        <p className="text-gray-500 text-lg italic max-w-xl leading-relaxed">
+                        <h1 className="font-serif text-4xl md:text-6xl text-brand-red mb-3">Mis Pedidos</h1>
+                        <p className="text-gray-500 text-base md:text-lg italic max-w-xl leading-relaxed">
                             Casi listo. Revisa tu selección y elige cómo prefieres pagar para disfrutar del auténtico sabor limeño.
                         </p>
                     </div>
-                    <div className="bg-brand-yellow/10 px-8 py-4 rounded-[2rem] border border-brand-yellow/20 shadow-sm">
-                        <span className="text-xs font-bold text-brand-yellow uppercase tracking-[0.2em] block mb-1">Tu Selección</span>
-                        <span className="text-3xl font-black text-brand-red">{cart.length} Platos</span>
+                    <div className="bg-brand-yellow/10 px-6 md:px-8 py-3 md:py-4 rounded-2xl md:rounded-[2rem] border border-brand-yellow/20 shadow-sm w-full md:w-auto flex md:block items-center justify-between">
+                        <div className="md:block">
+                            <span className="text-[10px] font-bold text-brand-yellow uppercase tracking-[0.2em] block mb-1">Tu Selección</span>
+                            <span className="text-2xl md:text-3xl font-black text-brand-red leading-none">{cart.length} Platos</span>
+                        </div>
+                        <ShoppingBag className="w-6 h-6 text-brand-yellow md:hidden" />
                     </div>
                 </div>
 
@@ -187,10 +190,10 @@ export default function MyOrdersPage() {
                                         <span className="bg-brand-red/10 w-10 h-10 rounded-xl text-brand-red flex items-center justify-center font-bold text-lg">01</span>
                                         Detalle del Pedido Actual
                                     </h2>
-                                    <div className="space-y-6">
+                                    <div className="space-y-4 md:space-y-6">
                                         {cart.map((item) => (
-                                            <div key={item.id} className="bg-gray-50/50 rounded-[1.5rem] p-6 flex items-center gap-8 group hover:bg-white hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-brand-red/10">
-                                                <div className="relative w-28 h-28 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
+                                            <div key={item.id} className="bg-gray-50/50 rounded-2xl md:rounded-[1.5rem] p-4 md:p-6 flex items-center gap-4 md:gap-8 group hover:bg-white hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-brand-red/10">
+                                                <div className="relative w-20 h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
                                                     <Image
                                                         src={item.image}
                                                         alt={item.name}
@@ -198,20 +201,20 @@ export default function MyOrdersPage() {
                                                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                                                     />
                                                 </div>
-                                                <div className="flex-grow">
-                                                    <h3 className="font-bold text-2xl text-gray-800 mb-2">{item.name}</h3>
-                                                    <div className="flex items-center gap-4">
-                                                        <span className="text-brand-red font-black text-xl">{item.priceFormatted}</span>
-                                                        <span className="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
-                                                        <span className="text-gray-500 font-bold bg-white px-4 py-1.5 rounded-xl border border-gray-100 text-sm shadow-sm tracking-tight">Cantidad: {item.quantity}</span>
+                                                <div className="flex-grow min-w-0">
+                                                    <h3 className="font-bold text-lg md:text-2xl text-gray-800 mb-1 md:mb-2 truncate">{item.name}</h3>
+                                                    <div className="flex flex-wrap items-center gap-2 md:gap-4">
+                                                        <span className="text-brand-red font-black text-base md:text-xl">{item.priceFormatted}</span>
+                                                        <span className="hidden md:block w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                                                        <span className="text-gray-500 font-bold bg-white px-3 md:px-4 py-1 md:py-1.5 rounded-lg md:rounded-xl border border-gray-100 text-[10px] md:text-sm shadow-sm tracking-tight">Cant: {item.quantity}</span>
                                                     </div>
                                                 </div>
                                                 <button
                                                     onClick={() => removeFromCart(item.id)}
-                                                    className="p-4 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all cursor-pointer group/del"
+                                                    className="p-3 md:p-4 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl md:rounded-2xl transition-all cursor-pointer group/del"
                                                     title="Eliminar plato"
                                                 >
-                                                    <Trash2 className="w-7 h-7 group-hover/del:scale-110 transition-transform" />
+                                                    <Trash2 className="w-5 h-5 md:w-7 md:h-7 group-hover/del:scale-110 transition-transform" />
                                                 </button>
                                             </div>
                                         ))}
@@ -248,28 +251,28 @@ export default function MyOrdersPage() {
                             ) : (
                                 <div className="space-y-4">
                                     {orderHistory.map((order) => (
-                                        <div key={order.id} className="bg-white rounded-[2rem] p-8 shadow-md border border-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                                            <div className="flex-grow">
-                                                <div className="flex items-center gap-3 mb-2">
-                                                    <span className="bg-brand-red text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-tighter">Pedido #{order.id}</span>
-                                                    <span className="text-gray-400 text-xs font-bold">{new Date(order.createdAt).toLocaleDateString()}</span>
+                                        <div key={order.id} className="bg-white rounded-2xl md:rounded-[2rem] p-5 md:p-8 shadow-md border border-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
+                                            <div className="flex-grow w-full md:w-auto">
+                                                <div className="flex items-center justify-between md:justify-start gap-3 mb-2">
+                                                    <span className="bg-brand-red text-white font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-tighter">Pedido #{order.id}</span>
+                                                    <span className="text-gray-400 text-[10px] font-bold">{new Date(order.createdAt).toLocaleDateString()}</span>
                                                 </div>
-                                                <p className="text-gray-600 text-sm font-medium mb-4">
+                                                <p className="text-gray-600 text-[11px] md:text-sm font-medium mb-4">
                                                     {order.items.length} platos • <span className="text-gray-800 font-bold">{order.paymentMethod}</span>
                                                 </p>
                                                 <button
                                                     onClick={() => handleRepeatOrder(order)}
-                                                    className="flex items-center gap-2 text-brand-red font-black text-[10px] uppercase tracking-widest hover:bg-brand-red/5 px-4 py-2 rounded-xl transition-all border border-brand-red/10 cursor-pointer"
+                                                    className="flex items-center gap-2 text-brand-red font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-brand-red/5 px-4 py-2 rounded-xl transition-all border border-brand-red/10 cursor-pointer w-full md:w-auto justify-center md:justify-start"
                                                 >
-                                                    <RefreshCw className="w-3 h-3" /> Repetir esta compra
+                                                    <RefreshCw className="w-3 h-3" /> Repetir pedido
                                                 </button>
                                             </div>
-                                            <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0 mt-4 md:mt-0">
-                                                <div className="text-right">
-                                                    <p className="text-xs text-gray-400 uppercase font-black tracking-widest leading-none mb-1">Total</p>
-                                                    <p className="text-2xl font-black text-brand-red leading-none">S/ {Number(order.total).toFixed(2)}</p>
+                                            <div className="flex items-center gap-4 md:gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0 mt-2 md:mt-0">
+                                                <div className="text-left md:text-right">
+                                                    <p className="text-[9px] text-gray-400 uppercase font-black tracking-widest leading-none mb-1">Total</p>
+                                                    <p className="text-xl md:text-2xl font-black text-brand-red leading-none">S/ {Number(order.total).toFixed(2)}</p>
                                                 </div>
-                                                <span className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest ${order.status === 'PENDIENTE' ? 'bg-green-100 text-green-700' : 'bg-green-100 text-green-700'}`}>
+                                                <span className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest ${order.status === 'PENDIENTE' ? 'bg-green-100 text-green-700' : 'bg-green-100 text-green-700'}`}>
                                                     {order.status === 'PENDIENTE' ? 'ENTREGADO' : order.status}
                                                 </span>
                                             </div>
